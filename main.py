@@ -1,35 +1,17 @@
+import logging
+from datetime import datetime
 import os
-import requests
-from requests.auth import HTTPBasicAuth
 
-from config import load_config
+def setup_logging():
+    os.makedirs("logs", exist_ok=True)
+    log_file = os.path.join("logs", f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log")
 
-
-def main():
-    config = load_config()
-
-    base_url = config["base_url"]
-    org_id = config["org_id"]
-
-    api_user = os.getenv("ILLUMIO_API_USER")
-    api_key = os.getenv("ILLUMIO_API_KEY")
-
-    if not api_user or not api_key:
-        print("Missing API credentials")
-        return
-
-    url = f"{base_url}/api/v2/orgs/{org_id}"
-
-    response = requests.get(
-        url,
-        auth=HTTPBasicAuth(api_user, api_key),
-        verify=config.get("verify_ssl", True),
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)s | %(message)s",
+        handlers=[
+            logging.FileHandler(log_file, encoding="utf-8"),
+            logging.StreamHandler()
+        ]
     )
-
-    print("Status code:", response.status_code)
-    print("Response:")
-    print(response.text)
-
-
-if __name__ == "__main__":
-    main()
+    logging.info("Logging initialized")
