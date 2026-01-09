@@ -15,3 +15,17 @@ def setup_logging():
         ]
     )
     logging.info("Logging initialized")
+
+
+def main():
+    setup_logging()
+    try:
+        # existing logic here
+        ...
+    except FileNotFoundError as e:
+        logging.error(f"Config file issue: {e}")
+    except KeyError as e:
+        logging.error(f"Missing required config key: {e}")
+    except Exception as e:
+        logging.exception(f"Unexpected error: {e}")
+
