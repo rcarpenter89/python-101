@@ -4,11 +4,13 @@ from datetime import datetime
 
 
 def setup_logging() -> str:
+    """
+    Creates a timestamped log file and also logs to console.
+    Returns the log file path for convenience.
+    """
     os.makedirs("logs", exist_ok=True)
 
-    log_file = os.path.join(
-        "logs", f"run_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-    )
+    log_file = os.path.join("logs", f"run_{datetime.now().strftime('%Y%m%d')}.log")
 
     logging.basicConfig(
         level=logging.INFO,
