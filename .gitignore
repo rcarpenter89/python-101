@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+
+# real config should not be committed
+config/settings.yaml
+
+# runtime output
+logs/
+out/
+
+# secrets files (if anyone uses them locally)
+.env
